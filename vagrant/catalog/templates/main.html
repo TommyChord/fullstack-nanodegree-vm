@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/styles.css') }}">
+	</head>
+	<body class="h-100">
+		<div class="container main-container h-100">
+				{% block content %}
+				{% endblock %}
+		</div>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% include "header.html" %}
+{% block categories %}
+<div class="row categories border-right border-info">
+    <div class="col-12 h4">Categories</div>
+    {% for c in categories %}
+    <div class="col-12">
+        <a href="{{url_for('show_items', category_id = c.id) }}" class="card-link">{{c.name}}</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 h4">{{selected_category.name}} Pedals</div>
+    {% if items %}
+        {% for i in items %}
+        <div class="col-12">
+            <a href="{{url_for('item_details', category_id = i.category.id, item_id=i.id) }}" class="card-link">{{i.title}}</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="text-danger">No Pedals found in this category</div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
