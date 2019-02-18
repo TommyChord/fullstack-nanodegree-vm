@@ -1,16 +1,27 @@
-<html>
-<head>
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/bootstrap.css') }}">-->
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/styles.css') }}">-->
-    <!--<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" ></script>-->
-</head>
+{% extends "main.html" %}
+{% include "header.html" %}
+{% block content %}
 
-<body>
-<div class="container">
-    <div class="row">
-        This is the catalog page
+<div class="row mt-5 border border-info">
+    <div class="content col-12 pt-3 pb-2 h-100">
+        <div class="row">
+            <div class="col-11 offset-1 h4">
+                Delete pedal "{{ item.title }}"
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10 offset-1 pb-4">
+                If you have nerves of steel and 100% sure that you will permanently delete this pedal from the database, hit the delete button below.<br />
+                If you are not sure you want to do this hit the cancel button and you should be safe.
+                <form action="{{ url_for('delete_item', category=item.category.name, title=item.title)}}" method="post">
+                    <div class="pt-3">
+                        <button type="submit" class="btn btn-danger btn-sm" id="submit" type="submit">Delete</button>
+                        <a href="{{ url_for('item_details', category = item.category.name, title=item.title) }}" type="button" role="button" class="btn btn-secondary btn-sm" id="cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-</body>
 
-</html>
+{% endblock %}

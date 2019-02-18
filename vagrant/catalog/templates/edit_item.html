@@ -1,16 +1,46 @@
-<html>
-<head>
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/bootstrap.css') }}">-->
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/styles.css') }}">-->
-    <!--<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" ></script>-->
-</head>
+{% extends "main.html" %}
+{% include "header.html" %}
+{% block content %}
+<div class="row mt-5 border border-info">
+    <div class="content col-12 pt-3 pb-2 h-100">
+        <div class="row">
+            <div class="col-11 offset-1 h4">
+                Edit pedal "{{ item.title }}"
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8 offset-1 pb-4">
+                <form method = "post">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input id="title" name="title" type ="text" class="form-control form-control-sm" maxlength="80" value="{{ item.title }}" placeholder="Enter the pedal name here" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="form-control form-control-sm" rows="10" placeholder="Enter the pedal description here" required>{{ item.description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" class="form-control form-control-sm col-4" required>
+                            <option value="">Select pedal category</option>
 
-<body>
-<div class="container">
-    <div class="row">
-        This is the catalog page
+                            {% for c in categories %}
+                            {% if c.id == item.category_id %}
+                            <option value="{{ c.id }}" selected>{{ c.name }}</option>
+                            {% else  %}
+                            <option value="{{ c.id }}">{{ c.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm" id="submit" type="submit">Update</button>
+                        <a href="{{ url_for('item_details', category = item.category.name, title=item.title) }}" type="button" role="button" class="btn btn-secondary btn-sm" id="cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-</body>
 
-</html>
+{% endblock %}

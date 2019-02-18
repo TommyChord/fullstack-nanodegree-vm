@@ -1,29 +1,49 @@
 {% extends "main.html" %}
 {% include "header.html" %}
-{% block categories %}
-<div class="row categories border-right border-info">
-    <div class="col-12 h4">Categories</div>
-    {% for c in categories %}
-    <div class="col-12">
-        <a href="{{url_for('show_items', category_id = c.id) }}" class="card-link">{{c.name}}</a>
-    </div>
-    {% endfor %}
-</div>
-{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12 h4">{{selected_category.name}} Pedals</div>
-    {% if items %}
-        {% for i in items %}
-        <div class="col-12">
-            <a href="{{url_for('item_details', category_id = i.category.id, item_id=i.id) }}" class="card-link">{{i.title}}</a>
+<div class="row mt-5 border border-info">
+    <div class="content col-12 pt-3 pb-2 h-100">
+        <div class="row">
+            <div class="col-12 h4">
+                <span>{{ item.title }}</span><span class="h5 font-italic category-link pl-2">({{ item.category.name }})</span>
+            </div>
         </div>
-        {% endfor %}
-    {% else %}
-        <div class="col-12">
-            <div class="text-danger">No Pedals found in this category</div>
+        <div class="row">
+            <div class="col-12 pb-4">
+                {{ item.description }}
+            </div>
         </div>
-    {% endif %}
+        <div class="row">
+            <div class="col-1 text-right pb-4 detail-profile">
+                {% if item.user.picture %}
+                <img src="{{ item.user.picture }}" class="detail-profile" title="{{ item.user.name }}">
+                {% endif %}
+            </div>
+            <div class="col-8 font-italic detail-profile my-auto">
+                <div>Added by:</div>
+                <div>{{ item.user.name }}</div>
+            </div>
+            {% if 'username' in session  and item.user_id == session['user_id'] %}
+            <div class="col-3 font-italic detail-profile my-auto text-right">
+                <a href="{{ url_for('edit_item', category=item.category.name, title=item.title) }}" class="btn btn-sm btn-outline-success" role="button" title="Edit this pedal information">
+                    <i class="far fa-edit pr-2"></i>Update Pedal
+                </a>
+                <a href="{{ url_for('delete_item', category=item.category.name, title=item.title) }}" class="btn btn-sm btn-outline-danger" role="button" title="Delete this pedal">
+                    <i class="far fa-trash-alt pr-2"></i>Delete Pedal
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ url_for('show_items', category=item.category.name) }}" title="Go back to {{ item.category.name }} pedals">
+                    <i class="h4 fas fa-angle-double-left"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

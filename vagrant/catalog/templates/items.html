@@ -1,16 +1,54 @@
-<html>
-<head>
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/bootstrap.css') }}">-->
-    <!--<link rel=stylesheet href="{{ url_for('static', filename='css/styles.css') }}">-->
-    <!--<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" ></script>-->
-</head>
+{% extends "main.html" %}
+{% include "header.html" %}
+{% block content %}
+<div class="row mt-5 mb-4 border border-info h-100">
+    <div class="content col-3 pt-3 pb-5 h-100">
+        <div class="row categories border-right border-info">
+            <div class="col-12 h4">Categories</div>
+            {% for c in categories %}
+            <div class="col-12">
+                <a href="{{url_for('show_items', category = c.name)}}" class="card-link">{{c.name}}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="content col-9 pt-3 pb-5 h-100">
+        <div class="row">
+            <div class="col-10 h4">
+                {{selected_category.name}} Pedals
+            </div>
 
-<body>
-<div class="container">
-    <div class="row">
-        This is the catalog page
+            {%if 'username' in session %}
+            <div class="col-2 my-auto">
+                <a href="{{url_for('new_item')}}" class="btn btn-sm btn-outline-success" role="button" title="Add a new pedal">
+                    <i class="fas fa-plus-square pr-2"></i>Add New
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+        {% if items %}
+            {% for i in items %}
+        <div class="row">
+            <div class="col-12">
+                <a href="{{url_for('item_details', category = i.category.name, title=i.title)}}" class="card-link">{{i.title}}</a>
+            </div>
+        </div>
+            {% endfor %}
+        {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="text-danger">No Pedals found in this category</div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col pt-4">
+                <a href="{{url_for('catalog')}}" class="card-link" title="Go back home">
+                    <i class="h4 fas fa-angle-double-left"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
-</body>
-
-</html>
+{% endblock %}
